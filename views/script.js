@@ -1,6 +1,4 @@
 const ytdl = require('ytdl-core');
-const { join } = require('path');
-const fs = require('fs');
 const ytrx = new RegExp('(?:youtube\\.com.*(?:\\?|&)(?:v|list)=|youtube\\.com.*embed\\/|youtube\\.com.*v\\/|youtu\\.be\\/)((?!videoseries)[a-zA-Z0-9_-]*)');
 
 
@@ -48,7 +46,7 @@ function playSong (song) {
     return playSong(songs[currentIndex + 1]);
   };
 
-  console.log('Now playing: ' + song.title);
+  document.getElementById('tracktitle').innerHTML = song.title;
   const trackIndex = songs.indexOf(currentlyPlaying);
   player.play();
 

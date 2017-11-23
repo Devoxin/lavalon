@@ -8,25 +8,21 @@
   </head>
   <body>
     <div style="text-align: center">
-      <h2 style="color: black;">Add song by URL</h2>
-      <input onpaste="readURL()" onkeypress="readURL()" class="input" type="text" name="url" id="urlBox">
+      <input placeholder="Paste song URL" onkeypress="readURL()" class="input" type="text" name="url" id="urlBox">
     </div>
 
     <div style="text-align: center" id="songList">
     </div>
 
-    <div id="playpause" class="columns is-mobile">
-      <div class="column is-1" style="background: #ffffff"></div>
-        
-      <div class="column"></div>
+    <div class="controls is-mobile">
+      <h2 class="nowplaying">Now Playing</h2>
+      <span class="tracktitle" id="tracktitle">Nothing</span>
 
-      <button class="column is-1" onclick="playPrev()"  >Prev</button>
-      <button class="column is-1" onclick="PlayPause()" >Play</button>
-      <button class="column is-1" onclick="playNext()"  >Next</button>
-            
-      <div class="column"></div>
-      <div class="column is-1" style="background: #ffffff"></div>
-      
+      <div class="playercontrols">
+        <button class="audiocontrol" onclick="playPrev()">Prev</button>
+        <button class="audiocontrol" onclick="PlayPause()">Play</button>
+        <button class="audiocontrol" onclick="playNext()">Next</button>
+      </div>
     </div>
 
   <script src="./script.js"></script> 

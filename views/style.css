@@ -2,6 +2,62 @@ body, html {
     background-color: #23272A
 }
 
+button {
+    background-color: rgb(60, 60, 60);
+    border-radius: 10px;
+    border-color: rgb(30, 30, 30);
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* Classes */
+
+.song {
+    background-color: #2c2f33;
+    border-radius: 7.5px;
+    width: 100%;
+    padding: 1%;
+    color: #000000
+}
+
+.playing {
+    animation: playingAnimation 7.5s infinite;
+}
+
+.playing-end {
+    animation: playingFinishAnimation 0.75s forwards;
+}
+
+.fadeIn {
+    animation: fadeInAnimation 0.75s forwards;
+}
+
+.controls {
+    position: fixed;
+    bottom: 0;
+    background-color: rgb(30, 30, 30);
+    width: 100%;
+    height: 10vh;
+}
+
+.playercontrols {
+    width: 20%;
+    text-align: center;
+    float: right;
+}
+
+.audiocontrol {
+    width: 75px;
+}
+
+.nowplaying {
+    color: rgb(150, 150, 150);
+    font-size: 130%;
+}
+
+/* Other */
+
 #urlBox {
     width: 50%;
     border: 2px solid black;
@@ -20,18 +76,7 @@ body, html {
     background: rgb(255, 0, 0);
 }
 
-.song {
-    background-color: #2c2f33;
-    border-radius: 7.5px;
-    width: 100%;
-    padding: 1%;
-    color: #000000
-}
-
-button.button {
-    margin-left: 5px;
-    border-radius: 5px;
-}
+/* Keyframes */
 
 @keyframes playingStartAnimation {
     from { background: #2c2f33; }
@@ -44,24 +89,12 @@ button.button {
     100% { background: #2c2f33; }
 }
 
-.playing {
-    animation: playingAnimation 7.5s infinite;
-}
-
 @keyframes playingFinishAnimation {
     from { background: #f4bf42; }
     to   { background: #2c2f33; }
 }
 
-.playing-end {
-    animation: playingFinishAnimation 0.75s forwards;
-}
-
 @keyframes fadeInAnimation {
     from { opacity: 0 }
     to { opacity: 1 }
-}
-
-.fadeIn {
-    animation: fadeInAnimation 0.75s forwards;
 }
