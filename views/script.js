@@ -54,7 +54,11 @@ function playSong (song) {
   const trackIndex = songs.indexOf(currentlyPlaying);
   player.play();
 
-  let parent = document.querySelector(`.song[index="${trackIndex}"]`);
+  const button = document.querySelector('button[onclick="PlayPause()"]');
+  button.innerHTML = 'pause';
+
+  const parent = document.querySelector(`.song[index="${trackIndex}"]`);
+
   if (parent.className.includes('fadein'))
     parent.className = parent.className.replace('fadein ', '');
 
@@ -115,14 +119,14 @@ function PlayPause () {
   const button = document.querySelector('button[onclick="PlayPause()"]');
 
   if (!currentlyPlaying) {
-    button.innerHTML = 'Pause';
+    button.innerHTML = 'pause';
     return playSong(songs[0]);
   }
 
   const playingSong = document.querySelector(`div[index="${songs.indexOf(currentlyPlaying)}"]`);
 
   if (player.paused) {
-    button.innerHTML = 'Pause';
+    button.innerHTML = 'pause';
     playingSong.className = playingSong.className.replace('paused', 'playing')
     player.play();
   } else {
@@ -130,7 +134,7 @@ function PlayPause () {
     setTimeout(() => {
       playingSong.className = playingSong.className.replace('playing-end', 'paused');
     }, 750);
-    button.innerHTML = 'Play';
+    button.innerHTML = 'play_arrow';
     player.pause();
   }
 }
