@@ -48,6 +48,7 @@ function playSong (song) {
     return playSong(songs[currentIndex + 1]);
   };
 
+  console.log('Now playing: ' + song.title);
   const trackIndex = songs.indexOf(currentlyPlaying);
   player.play();
 
@@ -95,7 +96,6 @@ function renderSongDiv (song) {
   playBtn.className = 'button is-primary is-small';
   playBtn.innerHTML = 'Play';
   playBtn.onclick = () => {
-    console.log('Now playing: ' + song.title);
     playSong(song);
   }
   btns.appendChild(playBtn);
