@@ -22,35 +22,29 @@ function readURL () {
 async function downloadFile (url) {
   const info = await ytdl.getInfo(url);
 
-  const filename = `${info.title}.opus`;
-  const stream = fs.createWriteStream(filename);
-  const pipe = ytdl(url, { filter: 'audioonly' })
-    .pipe(stream);
+  const song = {
+    title: info.title,
+    url: getBestStream(filterOpus(info.formats)).url,
+    index: songs.length
+  }
 
-
-  pipe.on('finish', () => {
-    addSong(`../${filename}`);
-  });
+  songs.push(song);
+  renderSongDiv(song);
 }
 
-function addSong (filename) {
-  songs.push(filename);
-  renderSongDiv(songs.length - 1);
-}
-
-function playSong (index) {
+function playSong (song) {
   if (currentlyPlaying) {
     currentlyPlaying.pause();
   }
-  currentlyPlaying = new Audio(songs[index]);
+  currentlyPlaying = new Audio(song.url);
   currentlyPlaying.volume = volume || 1;
   currentlyPlaying.onended = () => {
-    const playIndex = index >= songs.length - 1 ? 0 : index + 1;
-    playSong(playIndex);
+    const nextTrack = (song.index >= songs.length - 1 ? 0 : songs[song.index + 1]);
+    playSong(nextTrack);
   };
   currentlyPlaying.play();
 
-  let parent = document.querySelector(`.song[index="${index}"]`);
+  let parent = document.querySelector(`.song[index="${song.index}"]`);
   if (parent.className.includes('fadein')) {
     parent.className = parent.className.replace('fadein ', '');
   }
@@ -61,17 +55,17 @@ function playSong (index) {
       playing.className = playing.className.replace('playing-end', '');
     }, 750);
   }
-  document.querySelector(`.song[index="${index}"]`).className += ' playing';
+  document.querySelector(`.song[index="${song.index}"]`).className += ' playing';
 }
 
-function renderSongDiv (index) {
+function renderSongDiv (song) {
   const parent = document.createElement('div');
-  parent.setAttribute('index', index);
+  parent.setAttribute('index', song.index);
   parent.className = 'song fadein container level';
   const children = [];
 
   const songName = document.createElement('div');
-  songName.innerHTML = songs[index].split('/').pop().slice(0, -5);
+  songName.innerHTML = song.title;
   songName.className = 'songName level-left';
   children.push(songName);
 
@@ -81,13 +75,20 @@ function renderSongDiv (index) {
   const deleteBtn = document.createElement('button');
   deleteBtn.className = 'button is-danger is-small';
   deleteBtn.innerHTML = 'Delete';
+  deleteBtn.onclick = () => {
+    parent.parentElement.removeChild(parent);
+    if (songs.includes(song)) {
+      songs.splice(songs.indexOf(song), 1)
+    }
+  }
   btns.appendChild(deleteBtn);
 
   const playBtn = document.createElement('button');
   playBtn.className = 'button is-primary is-small';
   playBtn.innerHTML = 'Play';
   playBtn.onclick = () => {
-    playSong(index);
+    console.log('Now playing: ' + song.title);
+    playSong(song);
   }
   btns.appendChild(playBtn);
 
@@ -105,7 +106,7 @@ function PlayPause () {
 
   if (!currentlyPlaying) {
     button.innerHTML = 'Pause';
-    return playSong(0);
+    return playSong(songs[0]);
   }
 
   const playingSong = document.querySelector(`div[index="${songs.indexOf(currentlyPlaying.src.slice(7).replace(/%20/g, ' '))}"]`);
@@ -134,10 +135,20 @@ function playPrev () {
   playSong(currentIndex - 1 < 0 ? songs.length - 1 : currentIndex - 1);
 }
 
-fs.readdirSync('.')
-  .filter(filename => filename.endsWith('.opus'))
-  .forEach((r) => songs.push(join(__dirname, '..', r)));
+function filterOpus(formats) {
+    return formats.filter(f => f.type && f.type.includes('audio/webm') && f.url && f.audioBitrate);
+}
 
-songs.map((song, index) => {
-  renderSongDiv(index);
-});
+function getBestStream(streams) {
+    let highest;
+    streams.forEach(s => {
+        if (!highest) {
+            highest = s;
+        } else {
+            if (s.audioBitrate > highest.audioBitrate)
+                highest = s;
+        }
+    });
+
+    return highest;
+}
