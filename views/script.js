@@ -134,6 +134,9 @@ function PlayPause () {
 }
 
 function playNext () {
+  if (songs.length === 0)
+    return;
+
   const currentIndex = songs.indexOf(currentlyPlaying);
   if (currentIndex === -1 && songs.length > 0 || currentIndex === songs.length - 1)
     return playSong(songs[0]);
@@ -142,6 +145,9 @@ function playNext () {
 }
 
 function playPrev () {
+  if (songs.length === 0)
+    return;
+
   const currentIndex = songs.indexOf(currentlyPlaying);
   if (currentIndex === -1 && songs.length > 0 || currentIndex === 0)
     return playSong(songs[songs.length - 1]);
