@@ -45,7 +45,7 @@ function playSong (song) {
     if (currentIndex === -1 && songs.length > 0 || currentIndex === songs.length - 1)
       return playSong(songs[0]);
 
-    return playSong(songs[currentIndex++]);
+    return playSong(songs[currentIndex + 1]);
   };
 
   const trackIndex = songs.indexOf(currentlyPlaying);
@@ -138,7 +138,7 @@ function playNext () {
   if (currentIndex === -1 && songs.length > 0 || currentIndex === songs.length - 1)
     return playSong(songs[0]);
 
-  return playSong(songs[currentIndex++]);
+  return playSong(songs[currentIndex + 1]);
 }
 
 function playPrev () {
@@ -146,7 +146,7 @@ function playPrev () {
   if (currentIndex === -1 && songs.length > 0 || currentIndex === 0)
     return playSong(songs[songs.length - 1]);
 
-  return playSong(songs[currentIndex--]);
+  return playSong(songs[currentIndex - 1]);
 }
 
 function filterOpus(formats) {
