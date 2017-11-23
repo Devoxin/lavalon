@@ -3,12 +3,18 @@ body, html {
 }
 
 button {
-    background-color: rgb(60, 60, 60);
-    border-radius: 10px;
-    border-color: rgb(30, 30, 30);
+    background-color: transparent;
+    border-color: transparent;
     color: white;
-    padding-left: 10px;
-    padding-right: 10px;
+    outline: none;
+}
+
+button:hover {
+    background-color: rgba(30, 30, 30, 1);
+}
+
+button:active {
+    background-color: rgba(10, 10, 10, 0.3);
 }
 
 /* Classes */
@@ -22,7 +28,7 @@ button {
 }
 
 .playing {
-    animation: playingAnimation 7.5s infinite;
+    animation: playingAnimation 3s alternate infinite;
 }
 
 .playing-end {
@@ -35,20 +41,23 @@ button {
 
 .controls {
     position: fixed;
-    bottom: 0;
+    top: 100%;
+    transform: translateY(-10vh);
     background-color: rgb(30, 30, 30);
     width: 100%;
     height: 10vh;
+    box-shadow: 0px -1px 10px 0px black;
+    padding-left: 1vw;
 }
 
 .playercontrols {
-    width: 20%;
+    position: relative;
     text-align: center;
-    float: right;
 }
 
 .audiocontrol {
-    width: 75px;
+    position: relative;
+    transform: translateY(-175%);
 }
 
 .nowplaying {
@@ -60,10 +69,14 @@ button {
 
 #urlBox {
     width: 50%;
-    border: 2px solid black;
+    border: 2px solid rgba(20, 20, 20, 0.2);
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.25);
     margin: 1%;
+}
+
+#urlBox::placeholder {
+    color: rgb(50, 50, 50);
 }
 
 #playpause {
@@ -84,9 +97,12 @@ button {
 }
 
 @keyframes playingAnimation {
-    0% { background: #2c2f33; }
-    50% { background: #f4bf42; }
-    100% { background: #2c2f33; }
+    0% {
+        background-color: rgba(44, 47, 51, 1);
+    }
+    100% {
+        background-color: rgba(100, 100, 100, 1);
+    }
 }
 
 @keyframes playingFinishAnimation {

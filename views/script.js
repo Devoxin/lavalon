@@ -22,9 +22,13 @@ function readURL () {
 async function getTrackInfo (url) {
   const info = await ytdl.getInfo(url);
 
+  const streamURL = getBestStream(filterOpus(info.formats));
+  if (!streamURL)
+    return alert("Unplayable track: " + info.title);
+
   const song = {
     title: info.title,
-    url: getBestStream(filterOpus(info.formats)).url
+    url: streamURL.url
   }
 
   songs.push(song);
