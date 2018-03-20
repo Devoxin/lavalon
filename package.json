@@ -3,6 +3,6 @@
     "version": "0.1.0",
     "main": "main.js",
     "dependencies": {
-        "ytdl-core": "^0.18.2"
+        "ytdl-core": "^0.20.2"
     }
 }

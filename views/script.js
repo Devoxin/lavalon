@@ -1,7 +1,6 @@
 const ytdl = require('ytdl-core');
 const ytrx = new RegExp('(?:youtube\\.com.*(?:\\?|&)(?:v|list)=|youtube\\.com.*embed\\/|youtube\\.com.*v\\/|youtu\\.be\\/)((?!videoseries)[a-zA-Z0-9_-]*)');
 
-
 const songs = [];
 const songList = document.getElementById('songList');
 
@@ -24,11 +23,12 @@ async function getTrackInfo (url) {
 
   const streamURL = getBestStream(filterOpus(info.formats));
   if (!streamURL)
-    return alert("Unplayable track: " + info.title);
+    return alert(`Unplayable track: ${info.title}`);
 
   const song = {
     title: info.title,
-    url: streamURL.url
+    url: streamURL.url,
+    id: Date.now().toString() + info.video_id 
   }
 
   songs.push(song);
@@ -44,7 +44,7 @@ function playSong (song) {
   player.volume = volume || 1;
   player.onended = () => {
     const currentIndex = songs.indexOf(currentlyPlaying);
-    if (currentIndex === -1 && songs.length > 0 || currentIndex === songs.length - 1)
+    if (!~currentIndex && songs.length > 0 || currentIndex === songs.length - 1)
       return playSong(songs[0]);
 
     return playSong(songs[currentIndex + 1]);
@@ -63,12 +63,9 @@ function playSong (song) {
     parent.className = parent.className.replace('fadein ', '');
 
   const playing = document.querySelector('.playing');
-  if (playing) {
-    playing.className = playing.className.replace('playing', 'playing-end');
-    setTimeout(() => {
-      playing.className = playing.className.replace('playing-end', '');
-    }, 750);
-  }
+  if (playing)
+      playing.className.replace('playing', '');
+
   document.querySelector(`.song[index="${trackIndex}"]`).className += ' playing';
 }
 
@@ -88,8 +85,8 @@ function renderSongDiv (song) {
   btns.className = 'level-right';
 
   const deleteBtn = document.createElement('button');
-  deleteBtn.className = 'button is-danger is-small';
-  deleteBtn.innerHTML = 'Delete';
+  deleteBtn.className = 'button material-icons';
+  deleteBtn.innerHTML = 'clear';
   deleteBtn.onclick = () => {
     parent.parentElement.removeChild(parent);
     if (songs.includes(song)) {
@@ -97,14 +94,6 @@ function renderSongDiv (song) {
     }
   }
   btns.appendChild(deleteBtn);
-
-  const playBtn = document.createElement('button');
-  playBtn.className = 'button is-primary is-small';
-  playBtn.innerHTML = 'Play';
-  playBtn.onclick = () => {
-    playSong(song);
-  }
-  btns.appendChild(playBtn);
 
   children.push(btns);
 
@@ -130,10 +119,7 @@ function PlayPause () {
     playingSong.className = playingSong.className.replace('paused', 'playing')
     player.play();
   } else {
-    playingSong.className = playingSong.className.replace('playing', 'playing-end');
-    setTimeout(() => {
-      playingSong.className = playingSong.className.replace('playing-end', 'paused');
-    }, 750);
+    playingSong.className = playingSong.className.replace('playing', '');
     button.innerHTML = 'play_arrow';
     player.pause();
   }
@@ -144,7 +130,7 @@ function playNext () {
     return;
 
   const currentIndex = songs.indexOf(currentlyPlaying);
-  if (currentIndex === -1 && songs.length > 0 || currentIndex === songs.length - 1)
+  if (!~currentIndex && songs.length > 0 || currentIndex === songs.length - 1)
     return playSong(songs[0]);
 
   return playSong(songs[currentIndex + 1]);
@@ -155,26 +141,18 @@ function playPrev () {
     return;
 
   const currentIndex = songs.indexOf(currentlyPlaying);
-  if (currentIndex === -1 && songs.length > 0 || currentIndex === 0)
+  if (!~currentIndex && songs.length > 0 || currentIndex === 0)
     return playSong(songs[songs.length - 1]);
 
   return playSong(songs[currentIndex - 1]);
 }
 
 function filterOpus(formats) {
-    return formats.filter(f => f.type && f.type.includes('audio/webm') && f.url && f.audioBitrate);
+    return formats.filter(f => ['251', '250', '249'].includes(f.itag));
 }
 
 function getBestStream(streams) {
-    let highest;
-    streams.forEach(s => {
-        if (!highest) {
-            highest = s;
-        } else {
-            if (s.audioBitrate > highest.audioBitrate)
-                highest = s;
-        }
-    });
-
-    return highest;
+    streams = Object.values(streams);
+    streams.sort((a, b) => b.audioBitrate - a.audioBitrate)
+    return streams[0];
 }

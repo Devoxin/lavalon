@@ -1,5 +1,5 @@
 body, html {
-    background-color: #23272A;
+    background-color: rgb(50, 50, 50);
     margin: 0;
 }
 
@@ -21,11 +21,11 @@ button:active {
 /* Classes */
 
 .song {
-    background-color: #2c2f33;
+    background-color: rgb(70, 70, 70);
     border-radius: 7.5px;
     width: 100%;
     padding: 1%;
-    color: #000000
+    color: white;
 }
 
 .playing {
@@ -75,14 +75,15 @@ button:active {
 
 #urlBox {
     width: 50%;
-    border: 2px solid rgba(20, 20, 20, 0.2);
+    border: 2px solid rgba(50, 50, 50, 0.05);
     border-radius: 5px;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgb(60, 60, 60);
     margin: 1%;
+    color: white;
 }
 
 #urlBox::placeholder {
-    color: rgb(50, 50, 50);
+    color: rgb(150, 150, 150);
 }
 
 #playpause {
