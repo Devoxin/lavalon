@@ -28,17 +28,63 @@ button:active {
     color: white;
 }
 
-.playing {
-    animation: playingAnimation 3s alternate infinite;
-}
-
-.playing-end {
-    animation: playingFinishAnimation 0.75s forwards;
+.button {
+    background-color: rgb(70, 70, 70);
+    border-radius: 7.5px;
+    width: 25%;
+    padding: 1%;
+    color: white;
 }
 
 .fadeIn {
     animation: fadeInAnimation 0.75s forwards;
 }
+
+.volume-container {
+    position: absolute;
+    top: 910px;
+    right: 10px;
+  }
+  
+  .volume {
+    -webkit-appearance: none;
+    width: 120px;
+    height: 5px;
+    background: rgb(255, 255, 255);
+    border-radius: 4px;
+    outline: none;
+    opacity: 1;
+  }
+  
+  input[type=range]::-moz-range-track {
+    width: 120px;
+    height: 5px;
+    background: rgb(255, 255, 255);
+    border-radius: 4px;
+    outline: none;
+    opacity: 1;
+  }
+  
+  .volume-container  .fa-volume-up {
+      position: relative;
+      top: 3px;
+      margin-right: 5px;
+  }
+  
+  .volume:hover {
+      opacity: 0.8;
+      background: rgb(255, 255, 255);
+  }
+  
+  .volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: rgb(70, 70, 70);
+    cursor: pointer;
+    border-radius: 50%;
+  }
 
 .controls {
     position: absolute;
@@ -70,6 +116,9 @@ button:active {
     color: rgb(150, 150, 150);
     font-size: 130%;
 }
+
+  
+  
 
 /* Other */
 
