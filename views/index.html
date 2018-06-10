@@ -6,14 +6,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="./style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <div style="text-align: center">
       <input placeholder="Paste song URL" onkeypress="readURL()" class="input" type="text" name="url" id="urlBox">
     </div>
 
-    <div style="text-align: center" id="songList">
+    <div style="text-align: center" class="songList" id="songList">
     </div>
 
     <div class="controls is-mobile">
@@ -28,10 +27,7 @@
         <button class="audiocontrol material-icons" onclick="playNext()">skip_next</button>
       </div>
 
-      <div class="volume-container">
-        <i class="fa fa-volume-up" aria-hidden="true"></i>
-        <input min="0" max="100" class="volume" value="50" type="range" oninput="setVolume(this.value)">
-      </div>
+      <input class="volume" type="range" min="0" max="100" value="100" oninput="setVolume(this.value)">
     </div>
 
     <script src="./script.js"></script>

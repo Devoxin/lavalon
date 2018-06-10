@@ -37,7 +37,9 @@ async function getTrackInfo (url) {
 }
 
 function setVolume (val) {
-  player.volume = val / 100;
+  if (player) {
+    player.volume = val / 100;
+  }
 }
 
 function playSong (song) {
@@ -82,7 +84,7 @@ function renderSongDiv (song) {
   const trackIndex = songs.indexOf(song);
   const parent = document.createElement('div');
   parent.setAttribute('index', trackIndex);
-  parent.className = 'song fadein container level';
+  parent.className = 'song';
   const children = [];
 
   const songName = document.createElement('div');
