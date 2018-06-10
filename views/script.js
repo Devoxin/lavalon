@@ -35,6 +35,12 @@ async function getTrackInfo (url) {
   renderSongDiv(song);
 }
 
+function SetVolume(val) {
+        console.log('Before: ' + player.volume);
+        player.volume = val / 100;
+        console.log('After: ' + player.volume);
+    }
+
 function playSong (song) {
   if (player) 
     player.pause();
@@ -85,8 +91,8 @@ function renderSongDiv (song) {
   btns.className = 'level-right';
 
   const deleteBtn = document.createElement('button');
-  deleteBtn.className = 'button material-icons';
-  deleteBtn.innerHTML = 'clear';
+  deleteBtn.className = 'song button';
+  deleteBtn.className = 'fa fa-close'
   deleteBtn.onclick = () => {
     parent.parentElement.removeChild(parent);
     if (songs.includes(song)) {
