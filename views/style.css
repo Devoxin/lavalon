@@ -21,6 +21,7 @@ button:active {
 /* Classes */
 
 .song {
+  position: relative;
   width: 100%;
   padding: 10px;
   color: white;
@@ -28,6 +29,12 @@ button:active {
 
 .song:nth-child(odd) {
   background-color: rgb(70, 70, 70);
+}
+
+.song button {
+  position: absolute;
+  right: 0px;
+  bottom: 6px;
 }
 
 .button {

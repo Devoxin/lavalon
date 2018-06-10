@@ -85,33 +85,21 @@ function renderSongDiv (song) {
   const parent = document.createElement('div');
   parent.setAttribute('index', trackIndex);
   parent.className = 'song';
-  const children = [];
 
-  const songName = document.createElement('div');
-  songName.innerHTML = song.title;
-  songName.className = 'songName level-left';
-  children.push(songName);
-
-  const btns = document.createElement('div');
-  btns.className = 'level-right';
+  const songName = document.createElement('p');
+  songName.innerText = song.title;
 
   const deleteBtn = document.createElement('button');
-  deleteBtn.className = 'song button';
-  deleteBtn.className = 'fa fa-close';
+  deleteBtn.className = 'material-icons';
+  deleteBtn.innerText = 'clear'
   deleteBtn.onclick = () => {
     parent.parentElement.removeChild(parent);
     if (songs.includes(song)) {
       songs.splice(songs.indexOf(song), 1);
     }
   };
-  btns.appendChild(deleteBtn);
-
-  children.push(btns);
-
-  for (const child of children) {
-    parent.appendChild(child);
-  }
-
+  parent.appendChild(songName);
+  parent.appendChild(deleteBtn);
   songList.appendChild(parent);
 }
 
