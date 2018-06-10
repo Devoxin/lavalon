@@ -41,9 +41,8 @@ button:active {
 }
 
 .volume-container {
-  position: absolute;
-  top: 910px;
-  right: 10px;
+  position: relative;
+  text-align: right;
 }
 
 .volume {
@@ -66,9 +65,9 @@ input[type=range]::-moz-range-track {
 }
 
 .volume-container .fa-volume-up {
-  position: relative;
   top: 3px;
   margin-right: 5px;
+  color: rgb(125, 125, 125);
 }
 
 .volume:hover {
