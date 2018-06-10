@@ -16,11 +16,6 @@
     <div style="text-align: center" id="songList">
     </div>
 
-    <div class="volume-container">
-      <i class="fa fa-volume-up" aria-hidden="true"></i>
-      <input min="0" max="100" class="volume" value="56" type="range" oninput="SetVolume(this.value)">
-    </div>
-
     <div class="controls is-mobile">
       <div class="playing-status">
         <h2 class="nowplaying">Now Playing</h2>
@@ -32,6 +27,11 @@
         <button class="audiocontrol material-icons" onclick="PlayPause()">play_arrow</button>
         <button class="audiocontrol material-icons" onclick="playNext()">skip_next</button>
       </div>
+    </div>
+
+    <div class="volume-container">
+      <i class="fa fa-volume-up" aria-hidden="true"></i>
+      <input min="0" max="100" class="volume" value="50" type="range" oninput="setVolume(this.value)">
     </div>
 
     <script src="./script.js"></script>

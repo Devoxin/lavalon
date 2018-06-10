@@ -1,172 +1,181 @@
 body, html {
-    background-color: rgb(50, 50, 50);
-    margin: 0;
+  background-color: rgb(50, 50, 50);
+  margin: 0;
 }
 
 button {
-    background-color: transparent;
-    border-color: transparent;
-    color: white;
-    outline: none;
+  background-color: transparent;
+  border-color: transparent;
+  color: white;
+  outline: none;
 }
 
 button:hover {
-    background-color: rgba(30, 30, 30, 1);
+  background-color: rgba(30, 30, 30, 1);
 }
 
 button:active {
-    background-color: rgba(10, 10, 10, 0.3);
+  background-color: rgba(10, 10, 10, 0.3);
 }
 
 /* Classes */
 
 .song {
-    background-color: rgb(70, 70, 70);
-    border-radius: 7.5px;
-    width: 100%;
-    padding: 1%;
-    color: white;
+  background-color: rgb(70, 70, 70);
+  border-radius: 7.5px;
+  width: 100%;
+  padding: 1%;
+  color: white;
 }
 
 .button {
-    background-color: rgb(70, 70, 70);
-    border-radius: 7.5px;
-    width: 25%;
-    padding: 1%;
-    color: white;
+  background-color: rgb(70, 70, 70);
+  border-radius: 7.5px;
+  width: 25%;
+  padding: 1%;
+  color: white;
 }
 
 .fadeIn {
-    animation: fadeInAnimation 0.75s forwards;
+  animation: fadeInAnimation 0.75s forwards;
 }
 
 .volume-container {
-    position: absolute;
-    top: 910px;
-    right: 10px;
-  }
-  
-  .volume {
-    -webkit-appearance: none;
-    width: 120px;
-    height: 5px;
-    background: rgb(255, 255, 255);
-    border-radius: 4px;
-    outline: none;
-    opacity: 1;
-  }
-  
-  input[type=range]::-moz-range-track {
-    width: 120px;
-    height: 5px;
-    background: rgb(255, 255, 255);
-    border-radius: 4px;
-    outline: none;
-    opacity: 1;
-  }
-  
-  .volume-container  .fa-volume-up {
-      position: relative;
-      top: 3px;
-      margin-right: 5px;
-  }
-  
-  .volume:hover {
-      opacity: 0.8;
-      background: rgb(255, 255, 255);
-  }
-  
-  .volume::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    background: rgb(70, 70, 70);
-    cursor: pointer;
-    border-radius: 50%;
-  }
+  position: absolute;
+  top: 910px;
+  right: 10px;
+}
+
+.volume {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 120px;
+  height: 5px;
+  background: rgb(255, 255, 255);
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type=range]::-moz-range-track {
+  width: 120px;
+  height: 5px;
+  background: rgb(255, 255, 255);
+  border-radius: 4px;
+  outline: none;
+  opacity: 1;
+}
+
+.volume-container .fa-volume-up {
+  position: relative;
+  top: 3px;
+  margin-right: 5px;
+}
+
+.volume:hover {
+  opacity: 0.8;
+  background: rgb(255, 255, 255);
+}
+
+.volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: rgb(160, 160, 160);
+  cursor: pointer;
+  border-radius: 50%;
+}
 
 .controls {
-    position: absolute;
-    bottom: 0;
-    background-color: rgb(30, 30, 30);
-    width: 100%;
-    height: 5em;
-    box-shadow: 0px -2px 10px 0px black;
-    padding-left: 1vw;
+  position: absolute;
+  bottom: 0;
+  background-color: rgb(30, 30, 30);
+  width: 100%;
+  height: 5em;
+  box-shadow: 0px -2px 10px 0px black;
+  padding-left: 1vw;
 }
 
 .playercontrols {
-    position: relative;
-    text-align: center;
+  position: relative;
+  text-align: center;
 }
 
 .audiocontrol {
-    position: relative;
-    bottom: 30px;
+  position: relative;
+  bottom: 30px;
 }
 
 .playing-status {
-    position: relative;
-    bottom: -12px;
-    left: 10px;
+  position: relative;
+  bottom: -12px;
+  left: 10px;
 }
 
 .nowplaying {
-    color: rgb(150, 150, 150);
-    font-size: 130%;
+  color: rgb(150, 150, 150);
+  font-size: 130%;
 }
-
-  
-  
 
 /* Other */
 
 #urlBox {
-    width: 50%;
-    border: 2px solid rgba(50, 50, 50, 0.05);
-    border-radius: 5px;
-    background: rgb(60, 60, 60);
-    margin: 1%;
-    color: white;
+  width: 50%;
+  border: 2px solid rgba(50, 50, 50, 0.05);
+  border-radius: 5px;
+  background: rgb(60, 60, 60);
+  margin: 1%;
+  color: white;
 }
 
 #urlBox::placeholder {
-    color: rgb(150, 150, 150);
+  color: rgb(150, 150, 150);
 }
 
 #playpause {
-    bottom: 0;
-    position: absolute;
-    margin-bottom: 0;
-    right: 0;
-    left: 0;
-    height: 5%;
-    background: rgb(255, 0, 0);
+  bottom: 0;
+  position: absolute;
+  margin-bottom: 0;
+  right: 0;
+  left: 0;
+  height: 5%;
+  background: rgb(255, 0, 0);
 }
 
 /* Keyframes */
 
 @keyframes playingStartAnimation {
-    from { background: #2c2f33; }
-    to { background: #f4bf42; }
+  from {
+    background: #2c2f33;
+  }
+  to {
+    background: #f4bf42;
+  }
 }
 
 @keyframes playingAnimation {
-    0% {
-        background-color: rgba(44, 47, 51, 1);
-    }
-    100% {
-        background-color: rgba(100, 100, 100, 1);
-    }
+  0% {
+    background-color: rgba(44, 47, 51, 1);
+  }
+  100% {
+    background-color: rgba(100, 100, 100, 1);
+  }
 }
 
 @keyframes playingFinishAnimation {
-    from { background: #f4bf42; }
-    to   { background: #2c2f33; }
+  from {
+    background: #f4bf42;
+  }
+  to {
+    background: #2c2f33;
+  }
 }
 
 @keyframes fadeInAnimation {
-    from { opacity: 0 }
-    to { opacity: 1 }
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
 }
