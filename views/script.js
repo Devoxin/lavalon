@@ -79,13 +79,12 @@ function playSong (song) {
     playing.className = playing.className.replace('playing', '');
   }
 
-  document.querySelector(`.song[index="${songs.indexOf(currentlyPlaying)}"]`).className += ' playing';
+  document.querySelector(`.song[id="${currentlyPlaying.id}"]`).className += ' playing';
 }
 
 function renderSongDiv (song) {
-  const trackIndex = songs.indexOf(song);
   const parent = document.createElement('div');
-  parent.setAttribute('index', trackIndex);
+  parent.setAttribute('id', song.id);
   parent.className = 'song';
 
   const songName = document.createElement('p');
