@@ -1,5 +1,5 @@
 const ytdl = require('ytdl-core');
-const ytrx = new RegExp('(?:youtube\\.com.*(?:\\?|&)(?:v|list)=|youtube\\.com.*embed\\/|youtube\\.com.*v\\/|youtu\\.be\\/)((?!videoseries)[a-zA-Z0-9_-]*)');
+const search = require('tubesearch');
 
 const songs = [];
 const songList = document.getElementById('songList');
@@ -8,14 +8,23 @@ let currentlyPlaying;
 let player;
 let volume;
 
-function readURL () {
-  setTimeout(() => {
+async function lookupTrack (event) {
+  if (event.keyCode === 13) {
     const url = document.getElementById('urlBox').value;
-    if (ytrx.test(url)) {
-      getTrackInfo(url);
-      document.getElementById('urlBox').value = '';
+    const isValidUrl = ytdl.validateURL(url) || ytdl.validateID(url);
+
+    let link = url;
+
+    if (!isValidUrl) {
+      const searchResults = await search(url);
+      if (searchResults.length > 0) {
+        link = searchResults[0].id;
+      }
     }
-  }, 100);
+
+    getTrackInfo(link);
+    document.getElementById('urlBox').value = '';
+  }
 }
 
 async function getTrackInfo (url) {

@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, session } = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -19,6 +19,11 @@ function createWindow () {
     protocol: 'file:',
     slashes: true
   }));
+
+  win.webContents.session.webRequest.onBeforeSendHeaders((details, callback) => {
+      details.requestHeaders['User-Agent'] = '';
+      callback({ cancel: false, requestHeaders: details.requestHeaders });
+  });
 
   // Emitted when the window is closed.
   win.on('closed', () => {
