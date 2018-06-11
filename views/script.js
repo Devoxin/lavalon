@@ -69,24 +69,17 @@ function playSong (song) {
   };
 
   document.getElementById('tracktitle').innerHTML = song.title;
-  const trackIndex = songs.indexOf(currentlyPlaying);
   player.play();
 
   const button = document.querySelector('button[onclick="PlayPause()"]');
   button.innerHTML = 'pause';
 
-  const parent = document.querySelector(`.song[index="${trackIndex}"]`);
-
-  if (parent.className.includes('fadein')) {
-    parent.className = parent.className.replace('fadein ', '');
-  }
-
   const playing = document.querySelector('.playing');
   if (playing) {
-    playing.className.replace('playing', '');
+    playing.className = playing.className.replace('playing', '');
   }
 
-  document.querySelector(`.song[index="${trackIndex}"]`).className += ' playing';
+  document.querySelector(`.song[index="${songs.indexOf(currentlyPlaying)}"]`).className += ' playing';
 }
 
 function renderSongDiv (song) {
@@ -120,14 +113,10 @@ function PlayPause () {
     return playSong(songs[0]);
   }
 
-  const playingSong = document.querySelector(`div[index="${songs.indexOf(currentlyPlaying)}"]`);
-
   if (player.paused) {
     button.innerHTML = 'pause';
-    playingSong.className = playingSong.className.replace('paused', 'playing');
     player.play();
   } else {
-    playingSong.className = playingSong.className.replace('playing', '');
     button.innerHTML = 'play_arrow';
     player.pause();
   }

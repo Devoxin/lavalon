@@ -45,10 +45,6 @@ button:active {
   color: white;
 }
 
-.fadeIn {
-  animation: fadeInAnimation 0.75s forwards;
-}
-
 .controls {
   position: absolute;
   bottom: 0;
@@ -112,6 +108,10 @@ button:active {
   font-size: 130%;
 }
 
+.playing {
+  border: 1px solid rgb(150, 150, 150);
+}
+
 /* Other */
 
 #urlBox {
@@ -139,42 +139,4 @@ button:active {
 
 .songList {
   width: 100%;
-}
-
-/* Keyframes */
-
-@keyframes playingStartAnimation {
-  from {
-    background: #2c2f33;
-  }
-  to {
-    background: #f4bf42;
-  }
-}
-
-@keyframes playingAnimation {
-  0% {
-    background-color: rgba(44, 47, 51, 1);
-  }
-  100% {
-    background-color: rgba(100, 100, 100, 1);
-  }
-}
-
-@keyframes playingFinishAnimation {
-  from {
-    background: #f4bf42;
-  }
-  to {
-    background: #2c2f33;
-  }
-}
-
-@keyframes fadeInAnimation {
-  from {
-    opacity: 0
-  }
-  to {
-    opacity: 1
-  }
 }
