@@ -109,7 +109,7 @@ button:active {
 }
 
 .playing {
-  border: 1px solid rgb(150, 150, 150);
+  color: #20B639;
 }
 
 /* Other */
