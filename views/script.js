@@ -59,7 +59,21 @@ function playSong (song) {
   currentlyPlaying = song;
   player = new Audio(song.url);
   player.volume = volume || 1;
+
+  player.onplay = () => {
+    const interval = setInterval(() => {
+      if (!player || player.paused || player.ended) {
+        return clearInterval(interval);
+      }
+
+      const pc = Math.min((player.currentTime / player.duration * 100), 100);
+      document.getElementById('seekbar').style = `width: ${pc}%;`;
+    }, 50);
+  }
+
   player.onended = () => {
+    document.getElementById('seekbar').style = 'width: 0%;';
+
     const currentIndex = songs.indexOf(currentlyPlaying);
     if (!~currentIndex && songs.length > 0 || currentIndex === songs.length - 1) {
       return playSong(songs[0]);

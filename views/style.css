@@ -1,6 +1,7 @@
 body, html {
   background-color: rgb(50, 50, 50);
   margin: 0;
+  overflow-y: hidden;
 }
 
 button {
@@ -110,6 +111,14 @@ button:active {
 
 .playing {
   color: #20B639;
+}
+
+.seekbar {
+  position: absolute;
+  background-color: white;
+  height: 3px;
+  width: 0%;
+  left: 0px;
 }
 
 /* Other */

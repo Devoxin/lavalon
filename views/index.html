@@ -1,34 +1,40 @@
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Lavalon</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
-    <link rel="stylesheet" type="text/css" href="./style.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  </head>
-  <body>
-    <div style="text-align: center">
-      <input placeholder="Enter search query or paste URL..." onkeypress="lookupTrack(event)" class="input" type="text" name="url" id="urlBox">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Lavalon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body>
+  <div style="text-align: center">
+    <input placeholder="Enter search query or paste URL..." onkeypress="lookupTrack(event)" class="input" type="text"
+      name="url" id="urlBox">
+  </div>
+
+  <div class="songList" id="songList"></div>
+
+  <div class="controls is-mobile">
+    <div class="seekbar" id="seekbar">
     </div>
+    <div class="playing-status">
+      <h2 class="nowplaying">Now Playing</h2>
+      <span class="tracktitle" id="tracktitle">Nothing</span>
+  </div>
 
-    <div class="songList" id="songList"></div>
+  <div class="playercontrols">
+    <button class="audiocontrol material-icons" onclick="playPrev()">skip_previous</button>
+    <button class="audiocontrol material-icons" onclick="PlayPause()">play_arrow</button>
+    <button class="audiocontrol material-icons" onclick="playNext()">skip_next</button>
+  </div>
 
-    <div class="controls is-mobile">
-      <div class="playing-status">
-        <h2 class="nowplaying">Now Playing</h2>
-        <span class="tracktitle" id="tracktitle">Nothing</span>
-      </div>
+  <input class="volume" type="range" min="0" max="100" value="100" oninput="setVolume(this.value)">
+  </div>
 
-      <div class="playercontrols">
-        <button class="audiocontrol material-icons" onclick="playPrev()">skip_previous</button>
-        <button class="audiocontrol material-icons" onclick="PlayPause()">play_arrow</button>
-        <button class="audiocontrol material-icons" onclick="playNext()">skip_next</button>
-      </div>
+  <script src="./script.js"></script>
+</body>
 
-      <input class="volume" type="range" min="0" max="100" value="100" oninput="setVolume(this.value)">
-    </div>
-
-    <script src="./script.js"></script>
-  </body>
 </html>
