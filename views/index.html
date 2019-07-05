@@ -10,29 +10,34 @@
 </head>
 
 <body>
-  <div style="text-align: center">
-    <input placeholder="Enter search query or paste URL..." onkeypress="lookupTrack(event)" class="input" type="text"
-      name="url" id="urlBox">
-  </div>
+  <input placeholder="Enter search query or URL..." onkeypress="lookupTrack(event)" class="searchBar" type="text"
+    name="url" id="urlBox">
 
-  <div class="songList" id="songList"></div>
+  <div class="songList" id="trackList"></div>
 
-  <div class="controls is-mobile">
-    <div class="seekbar" id="seekbar">
+  <div class="dock">
+    <div class="seekcontainer" onclick="seekTo(event)">
+      <div class="seekbar" id="seekbar">
+      </div>
     </div>
+
     <div class="playing-status">
       <h2 class="nowplaying">Now Playing</h2>
       <span class="tracktitle" id="tracktitle">Nothing</span>
-  </div>
+    </div>
 
-  <div class="playercontrols">
-    <button class="audiocontrol material-icons" onclick="playPrev()">skip_previous</button>
-    <button class="audiocontrol material-icons" onclick="PlayPause()">play_arrow</button>
-    <button class="audiocontrol material-icons" onclick="playNext()">skip_next</button>
-  </div>
+    <div class="playback-controls">
+      <button class="material-icons" onclick="playPrev()">skip_previous</button>
+      <button class="material-icons" onclick="playPause()">play_arrow</button>
+      <button class="material-icons" onclick="playNext()">skip_next</button>
+    </div>
 
-  <input class="volume" type="range" min="0" max="100" value="100" oninput="setVolume(this.value)">
+    <div class="volume">
+      <span class="material-icons">volume_mute</span>
+      <input type="range" min="0" max="100" value="100" oninput="setVolume(this.value)">
+    </div>
   </div>
+  <!--<input class="volume" type="range" min="0" max="25" value="0" oninput="setBass(this.value)"> equalizer shit, todo button-->
 
   <script src="./script.js"></script>
 </body>

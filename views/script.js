@@ -1,100 +1,107 @@
-const ytdl = require('ytdl-core');
-const search = require('tubesearch');
+const AudioPlayer = require('./AudioPlayer');
+const Keys = require('./KeyCodes');
 
-const songs = [];
-const songList = document.getElementById('songList');
+const player = new AudioPlayer();
 
-let currentlyPlaying;
-let player;
-let volume;
+const tracks = [];
+const trackList = document.getElementById('trackList');
 
 async function lookupTrack (event) {
-  if (event.keyCode === 13) {
-    const url = document.getElementById('urlBox').value;
-    const isValidUrl = ytdl.validateURL(url) || ytdl.validateID(url);
+  if (event.keyCode === Keys.ENTER) {
+    const query = document.getElementById('urlBox').value;
+    document.getElementById('urlBox').value = '';
 
-    let link = url;
+    const track = await player.resolveTrack(query);
 
-    if (!isValidUrl) {
-      const searchResults = await search(url);
-      if (searchResults.length > 0) {
-        link = searchResults[0].id;
-      }
+    if (!track) {
+      console.log('Bad query.');
+      return;
     }
 
-    getTrackInfo(link);
-    document.getElementById('urlBox').value = '';
+    tracks.push(track);
+    renderSongDiv(track);
+
   }
-}
-
-async function getTrackInfo (url) {
-  const info = await ytdl.getInfo(url);
-
-  const streamURL = getBestStream(filterOpus(info.formats));
-  if (!streamURL) {
-    return alert(`Unplayable track: ${info.title}`);
-  }
-
-  const song = {
-    title: info.title,
-    url: streamURL.url,
-    id: Date.now().toString() + info.video_id
-  };
-
-  songs.push(song);
-  renderSongDiv(song);
 }
 
 function setVolume (val) {
-  if (player) {
-    player.volume = val / 100;
-  }
+  player.volume = val / 100;
 }
 
-function playSong (song) {
-  if (player) {
-    player.pause();
-  }
+function setBass (val) {
+  player.setBass(val);
+}
 
-  currentlyPlaying = song;
-  player = new Audio(song.url);
-  player.volume = volume || 1;
+function seekTo (e) {
+  const cursorX = e.pageX;
+  // Todo: Figure out what 1 pixel is in seconds
+  // multiply cursorX by X seconds
+  // set player position.
+  console.log(cursorX);
+}
 
-  player.onplay = () => {
-    const interval = setInterval(() => {
-      if (!player || player.paused || player.ended) {
-        return clearInterval(interval);
-      }
+function playPause () {
+  const button = document.querySelector('button[onclick="playPause()"]');
 
-      const pc = Math.min((player.currentTime / player.duration * 100), 100);
-      document.getElementById('seekbar').style = `width: ${pc}%;`;
-    }, 50);
-  }
-
-  player.onended = () => {
-    document.getElementById('seekbar').style = 'width: 0%;';
-
-    const currentIndex = songs.indexOf(currentlyPlaying);
-    if (!~currentIndex && songs.length > 0 || currentIndex === songs.length - 1) {
-      return playSong(songs[0]);
+  if (!player.currentTrack) {
+    if (tracks.length === 0) {
+      return;
     }
 
-    return playSong(songs[currentIndex + 1]);
-  };
+    button.innerHTML = 'pause';
+    player.start(tracks[0]);
+  } else if (player.paused) {
+    button.innerHTML = 'pause';
+    player.play();
+  } else {
+    button.innerHTML = 'play_arrow';
+    player.pause();
+  }
+}
 
-  document.getElementById('tracktitle').innerHTML = song.title;
-  player.play();
-
-  const button = document.querySelector('button[onclick="PlayPause()"]');
-  button.innerHTML = 'pause';
-
-  const playing = document.querySelector('.playing');
-  if (playing) {
-    playing.className = playing.className.replace('playing', '');
+function playNext () {
+  if (!player.playing || tracks.length === 0) {
+    return;
   }
 
-  document.querySelector(`.song[id="${currentlyPlaying.id}"]`).className += ' playing';
+  player.pause();
+
+  const index = tracks.indexOf(player.currentTrack);
+
+  if (index === -1 || index + 1 >= tracks.length) {
+    player.start(tracks[0]);
+  } else {
+    player.start(tracks[index + 1]);
+  }
 }
+
+player.on('play', () => {
+  const interval = setInterval(() => {
+    if (player.paused || player.ended) {
+      return clearInterval(interval);
+    }
+    
+    const pc = Math.min((player.currentTime / player.duration * 100), 100);
+    document.getElementById('seekbar').style = `width: ${pc}%;`;
+  }, 50);
+
+  document.getElementById('tracktitle').innerHTML = player.currentTrack.title;
+});
+
+player.on('mediachange', () => {
+  const lastSong = document.querySelector('.playing');
+
+  if (lastSong) {
+    lastSong.classList.remove('playing');
+  }
+
+  document.querySelector(`.song[id="${player.currentTrack.id}"]`).classList.add('playing');
+});
+
+player.on('ended', () => {
+  document.getElementById('seekbar').style = 'width: 0%;';
+  playNext();
+});
 
 function renderSongDiv (song) {
   const parent = document.createElement('div');
@@ -109,64 +116,24 @@ function renderSongDiv (song) {
   deleteBtn.innerText = 'clear'
   deleteBtn.onclick = () => {
     parent.parentElement.removeChild(parent);
-    if (songs.includes(song)) {
-      songs.splice(songs.indexOf(song), 1);
+    if (tracks.includes(song)) {
+      tracks.splice(tracks.indexOf(song), 1);
     }
   };
   parent.appendChild(songName);
   parent.appendChild(deleteBtn);
-  songList.appendChild(parent);
+  trackList.appendChild(parent);
 }
 
-function PlayPause () {
-  const button = document.querySelector('button[onclick="PlayPause()"]');
+// function playPrev () {
+//   if (songs.length === 0) {
+//     return;
+//   }
 
-  if (!currentlyPlaying) {
-    button.innerHTML = 'pause';
-    return playSong(songs[0]);
-  }
+//   const currentIndex = songs.indexOf(currentlyPlaying);
+//   if (!~currentIndex && songs.length > 0 || currentIndex === 0) {
+//     return playSong(songs[songs.length - 1]);
+//   }
 
-  if (player.paused) {
-    button.innerHTML = 'pause';
-    player.play();
-  } else {
-    button.innerHTML = 'play_arrow';
-    player.pause();
-  }
-}
-
-function playNext () {
-  if (songs.length === 0) {
-    return;
-  }
-
-  const currentIndex = songs.indexOf(currentlyPlaying);
-  if (!~currentIndex && songs.length > 0 || currentIndex === songs.length - 1) {
-    return playSong(songs[0]);
-  }
-
-  return playSong(songs[currentIndex + 1]);
-}
-
-function playPrev () {
-  if (songs.length === 0) {
-    return;
-  }
-
-  const currentIndex = songs.indexOf(currentlyPlaying);
-  if (!~currentIndex && songs.length > 0 || currentIndex === 0) {
-    return playSong(songs[songs.length - 1]);
-  }
-
-  return playSong(songs[currentIndex - 1]);
-}
-
-function filterOpus (formats) {
-  return formats.filter(f => ['251', '250', '249'].includes(f.itag));
-}
-
-function getBestStream (streams) {
-  streams = Object.values(streams);
-  streams.sort((a, b) => b.audioBitrate - a.audioBitrate);
-  return streams[0];
-}
+//   return playSong(songs[currentIndex - 1]);
+// }
